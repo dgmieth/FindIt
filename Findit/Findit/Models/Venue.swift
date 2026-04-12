@@ -6,7 +6,7 @@ struct Venue: Codable, Identifiable, Hashable {
     let sortId: Int
 
     var imageURL: URL? {
-        let encodedName = name.replacingOccurrences(of: " ", with: "+")
-        return URL(string: "https://songleap.s3.amazonaws.com/venues/\(encodedName).png")
+        let urlString = "\(SONGLEAP_AMAZON_ADRESS_FOR_IMAGES)/artists/\(self.name).png"
+        return URL.createEncodedURL(urlString: urlString)
     }
 }
