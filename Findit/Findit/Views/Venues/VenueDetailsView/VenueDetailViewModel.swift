@@ -12,27 +12,26 @@ final class VenueDetailViewModel: ObservableObject {
     @Published var performances: [VenuePerformance] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
-
-    private let apiService: APIServiceProtocol
-
-    init(apiService: APIServiceProtocol = APIService.shared) {
-        self.apiService = apiService
-    }
+    
+    init() { }
 
     func loadPerformances(for venue: Venue) async {
-        isLoading = true
-        errorMessage = nil
+        self.isLoading = true
+        self.errorMessage = nil
+        
         let today = Date()
         let twoWeeksLater = Calendar.current.date(byAdding: .day, value: 14, to: today) ?? today
+        
         do {
-            performances = try await apiService.fetchVenuePerformances(
+            self.performances = try await Services.venueService.fetchVenuePerformances(
                 venueId: venue.id,
                 from: today,
                 to: twoWeeksLater
             )
         } catch {
-            errorMessage = error.localizedDescription
+            self.errorMessage = error.localizedDescription
         }
-        isLoading = false
+        
+        self.isLoading = false
     }
 }

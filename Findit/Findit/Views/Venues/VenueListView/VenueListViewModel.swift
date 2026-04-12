@@ -12,22 +12,20 @@ final class VenueListViewModel: ObservableObject {
     @Published var venues: [Venue] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
-
-    private let apiService: APIServiceProtocol
-
-    init(apiService: APIServiceProtocol = APIService.shared) {
-        self.apiService = apiService
-    }
+    
+    init() { }
 
     func loadVenues() async {
-        isLoading = true
-        errorMessage = nil
+        self.isLoading = true
+        self.errorMessage = nil
+        
         do {
-            venues = try await apiService.fetchVenues()
+            self.venues = try await Services.venueService.fetchVenues()
                 .sorted { $0.sortId < $1.sortId }
         } catch {
-            errorMessage = error.localizedDescription
+            self.errorMessage = error.localizedDescription
         }
-        isLoading = false
+        
+        self.isLoading = false
     }
 }

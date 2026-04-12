@@ -12,20 +12,18 @@ final class ArtistDetailViewModel: ObservableObject {
     @Published var performances: [ArtistPerformance] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
-
-    private let apiService: APIServiceProtocol
-
-    init(apiService: APIServiceProtocol = APIService.shared) {
-        self.apiService = apiService
-    }
+    
+    init() { }
 
     func loadPerformances(for artist: Artist) async {
-        isLoading = true
-        errorMessage = nil
+        self.isLoading = true
+        self.errorMessage = nil
+        
         let today = Date()
         let twoWeeksLater = Calendar.current.date(byAdding: .day, value: 14, to: today) ?? today
+        
         do {
-            performances = try await apiService.fetchArtistPerformances(
+            performances = try await Services.artistService.fetchArtistPerformances(
                 artistId: artist.id,
                 from: today,
                 to: twoWeeksLater
