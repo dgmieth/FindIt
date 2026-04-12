@@ -8,7 +8,7 @@ struct ArtistPerformance: Codable, Identifiable {
     let venue: PerformanceVenue
 
     var parsedDate: Date? {
-        DateFormatter.apiDateFormatter.date(from: date)
+        DateFormatter.formatter(for: .apiDateFormat).date(from: date)
     }
 }
 
@@ -20,7 +20,7 @@ struct VenuePerformance: Codable, Identifiable {
     let artist: PerformanceArtist
 
     var parsedDate: Date? {
-        DateFormatter.apiDateFormatter.date(from: date)
+        DateFormatter.formatter(for: .apiDateFormat).date(from: date)
     }
 }
 
@@ -31,8 +31,8 @@ struct PerformanceVenue: Codable, Identifiable, Hashable {
     let sortId: Int
 
     var imageURL: URL? {
-        let encodedName = name.replacingOccurrences(of: " ", with: "+")
-        return URL(string: "https://songleap.s3.amazonaws.com/venues/\(encodedName).png")
+        let urlString = "\(SONGLEAP_AMAZON_ADRESS_FOR_IMAGES)/venues/\(self.name).png"
+        return URL.createEncodedURL(urlString: urlString)
     }
 }
 
@@ -43,7 +43,7 @@ struct PerformanceArtist: Codable, Identifiable, Hashable {
     let genre: String
 
     var imageURL: URL? {
-        let encodedName = name.replacingOccurrences(of: " ", with: "+")
-        return URL(string: "https://songleap.s3.amazonaws.com/artists/\(encodedName).png")
+        let urlString = "\(SONGLEAP_AMAZON_ADRESS_FOR_IMAGES)/artists/\(self.name).png"
+        return URL.createEncodedURL(urlString: urlString)
     }
 }
