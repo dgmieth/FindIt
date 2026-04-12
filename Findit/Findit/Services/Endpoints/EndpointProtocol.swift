@@ -16,14 +16,18 @@ protocol EndpointProtocol: Sendable {
 
 extension EndpointProtocol {
     func generateRequest(for serverAddress: String) -> URLRequest? {
-        guard let url = URL(string: serverAddress + self.path) else {
+        guard var url = URL(string: serverAddress + self.path) else {
             return nil
         }
         
-        let urlParams = self.queryParams?.compactMap {
-            URLQueryItem(name: $0.key, value: $0.value)
-        } ?? []
+        if let queryParams {
+            let queryItems = queryParams.compactMap {
+                URLQueryItem(name: $0.key, value: $0.value)
+            }
+            
+            url = url.appending(queryItems: queryItems)
+        }
         
-        return URLRequest(url: url.appending(queryItems: urlParams))
+        return URLRequest(url: url)
     }
 }

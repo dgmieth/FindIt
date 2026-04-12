@@ -21,3 +21,11 @@
 
 "Views.Venues.Details.Performances.Next14Days" = "Next 14 Days";
 "Views.Venues.Details.Performances.Error.NoData" = "No upcoming performances";
+
+"Views.Filter.Option.Next14Days" = "Next 14 Days";
+"Views.Filter.Option.Next30Days" = "Next 30 Days";
+"Views.Filter.Option.Next60Days" = "Next 60 Days";
+"Views.Filter.Option.Custom" = "Custom";
+"Views.Filter.Option.LowerUpperBounds" = "From %@ to %@";
+"Views.Filter.Option.OnlyUpperBound" = "Before %@";
+"Views.Filter.Option.OnlyLowerBound" = "After %@";

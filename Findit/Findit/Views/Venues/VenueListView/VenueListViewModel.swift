@@ -20,6 +20,7 @@ final class VenueListViewModel: ObservableObject {
         self.errorMessage = nil
         
         do {
+            // AC ->  Venues will be displayed in order of their sortId
             self.venues = try await Services.venueService.fetchVenues()
                 .sorted { $0.sortId < $1.sortId }
         } catch {

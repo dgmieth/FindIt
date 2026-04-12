@@ -1,31 +1,35 @@
 import SwiftUI
 
 struct ArtistDetailView: View {
-    let artist: Artist
-    @StateObject private var viewModel = ArtistDetailViewModel()
-
+    @StateObject private var viewModel: ArtistDetailViewModel
+    @State private var showFilters: Bool = false
+    
+    init(artist: Artist) {
+        self._viewModel = .init(wrappedValue: .init(artist: artist))
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 // ── Header ──
                 VStack(spacing: 14) {
-                    ImageView(url: artist.imageURL, size: 160)
+                    ImageView(url: self.viewModel.artist.imageURL, size: 160)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 6, y: 3)
-
+                    
                     VStack(spacing: 4) {
-                        Text(artist.name)
+                        Text(self.viewModel.artist.name)
                             .font(.title2.bold())
                             .multilineTextAlignment(.center)
-                        Text(artist.genre)
+                        Text(self.viewModel.artist.genre)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
                 }
                 .padding(.vertical, 24)
-
+                
                 Divider()
-
+                
                 // ── Performances ──
                 VStack(alignment: .leading, spacing: 0) {
                     Text(R.string.localizable.viewsArtistsDetailsPerformancesNext14Days())
@@ -33,7 +37,7 @@ struct ArtistDetailView: View {
                         .padding(.horizontal)
                         .padding(.top, 16)
                         .padding(.bottom, 8)
-
+                    
                     if viewModel.isLoading {
                         HStack { Spacer(); ProgressView(); Spacer() }
                             .padding()
@@ -56,9 +60,31 @@ struct ArtistDetailView: View {
                 }
             }
         }
-        .navigationTitle(artist.name)
+        .navigationTitle(self.viewModel.artist.name)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    self.showFilters.toggle()
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease.circle")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.primary)
+                .contentShape(Rectangle())
+                .frame(minWidth: 44, minHeight: 44)
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
-        .task { await viewModel.loadPerformances(for: artist) }
+        .task { await viewModel.loadPerformances() }
+        .sheet(isPresented: self.$showFilters) {
+            FilterView(
+                filterOption: self.$viewModel.filterSelection
+            )
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
+        }
     }
 }
 
@@ -66,12 +92,12 @@ struct ArtistDetailView: View {
 
 private struct ArtistPerformanceRow: View {
     let performance: ArtistPerformance
-
+    
     var body: some View {
         HStack(spacing: 14) {
             ImageView(url: performance.venue.imageURL, size: 56)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-
+            
             VStack(alignment: .leading, spacing: 3) {
                 Text(performance.venue.name)
                     .font(.headline)
@@ -87,7 +113,7 @@ private struct ArtistPerformanceRow: View {
                         .foregroundStyle(.secondary)
                 }
             }
-
+            
             Spacer()
         }
         .padding(.horizontal)

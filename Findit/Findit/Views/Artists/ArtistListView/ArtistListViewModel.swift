@@ -19,6 +19,7 @@ final class ArtistListViewModel: ObservableObject {
         self.errorMessage = nil
         
         do {
+            // AC -> Artists must be displayed in alphabetical order by name
             self.artists = try await Services.artistService.fetchArtists()
                 .sorted { $0.name < $1.name }
         } catch {
