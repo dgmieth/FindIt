@@ -23,7 +23,7 @@ struct VenueDetailView: View {
 
                 // ── Performances ──
                 VStack(alignment: .leading, spacing: 0) {
-                    Text("Next 14 Days")
+                    Text(R.string.localizable.viewsVenuesDetailsPerformancesNext14Days())
                         .font(.headline)
                         .padding(.horizontal)
                         .padding(.top, 16)
@@ -38,7 +38,7 @@ struct VenueDetailView: View {
                             .padding()
                     } else if viewModel.performances.isEmpty {
                         ContentUnavailableView(
-                            "No upcoming performances",
+                            R.string.localizable.viewsVenuesDetailsPerformancesErrorNoData(),
                             systemImage: "calendar.badge.exclamationmark"
                         )
                         .padding()

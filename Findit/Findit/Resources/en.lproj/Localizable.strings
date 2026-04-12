@@ -11,7 +11,13 @@
 "Views.Artists.Lists.Search.Placeholder" = "Artists or genre";
 "Views.Artists.Lists.NavBar.Title" = "Artists";
 
+"Views.Artists.Details.Performances.Next14Days" = "Next 14 Days";
+"Views.Artists.Details.Performances.Error.NoData" = "No upcoming performances";
+
 "Views.Venues.Lists.State.Loading"= "Loading venues…";
 "Views.Venues.Lists.State.Error"= "Couldn't load venues";
 "Views.Venues.Lists.Search.Placeholder" = "Venue name";
 "Views.Venues.Lists.NavBar.Title" = "Venues";
+
+"Views.Venues.Details.Performances.Next14Days" = "Next 14 Days";
+"Views.Venues.Details.Performances.Error.NoData" = "No upcoming performances";
