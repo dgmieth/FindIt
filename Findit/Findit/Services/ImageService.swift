@@ -13,6 +13,10 @@ protocol ImageServiceProtocol: Actor {
 
 actor ImageService: ImageServiceProtocol {
     private let cache = NSCache<NSURL, UIImage>()
+    
+    init() {
+        cache.countLimit = 150
+    }
 
     func fetchImage(for url: URL?) async -> UIImage? {
         guard let url else { return nil }
