@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  FindIt
+
+  Created by Diego Mieth on 2026-04-09.
+  
+*/
+
+"Views.Artists.Lists.State.Loading"= "Loading artists…";
+"Views.Artists.Lists.State.Error"= "Couldn't load artists";
+"Views.Artists.Lists.Search.Placeholder" = "Artists or genre";
+"Views.Artists.Lists.NavBar.Title" = "Artists";
+
+"Views.Venues.Lists.State.Loading"= "Loading venues…";
+"Views.Venues.Lists.State.Error"= "Couldn't load venues";
+"Views.Venues.Lists.Search.Placeholder" = "Venue name";
+"Views.Venues.Lists.NavBar.Title" = "Venues";
