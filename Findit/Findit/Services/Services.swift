@@ -8,16 +8,18 @@
 import Foundation
 
 final class Services {
-    private static let instance = Services()
+    nonisolated(unsafe) private static let instance = Services()
     
     init() {
         self._artistService = ArtistService()
         self._venueService = VenueService()
+        self._imageService = ImageService()
     }
     
     // services
     private let _venueService: VenueServiceProtocol
     private let _artistService: ArtistServiceProtocol
+    private let _imageService: ImageServiceProtocol
     
     // exposed services
     static var artistService: ArtistServiceProtocol {
@@ -29,6 +31,12 @@ final class Services {
     static var venueService: VenueServiceProtocol {
         get {
             return Self.instance._venueService
+        }
+    }
+    
+    static var imageService: ImageServiceProtocol {
+        get {
+            return Self.instance._imageService
         }
     }
 }

@@ -47,13 +47,12 @@ struct ArtistListView: View {
 }
 
 // MARK: - Row
-
 private struct ArtistRowView: View {
     let artist: Artist
 
     var body: some View {
         HStack(spacing: 14) {
-            EntityImageView(url: artist.imageURL, size: 56)
+            ImageView(url: artist.imageURL, size: 56)
             VStack(alignment: .leading, spacing: 3) {
                 Text(artist.name)
                     .font(.headline)

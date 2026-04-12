@@ -1,0 +1,71 @@
+//
+//  ImageView.swift
+//  Findit
+//
+//  Created by Diego Mieth on 2026-04-12.
+//
+
+import SwiftUI
+
+struct ImageView: View {
+    enum ImageViewState {
+        case loading
+        case idle
+        case error
+    }
+    
+    private let url: URL?
+    private let size: CGFloat
+    
+    @State private var image: UIImage? = nil
+    @State private var state: ImageViewState = .loading
+    
+    init(url: URL?, size: CGFloat) {
+        self.url = url
+        self.size = size
+    }
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 0) {
+            switch self.state {
+            case .loading:
+                ZStack {
+                    Color.secondary.opacity(0.15)
+                    ProgressView()
+                }
+            case .idle:
+                Image(uiImage: self.image ?? UIImage())
+                    .resizable()
+                    .scaledToFit()
+            case .error:
+                ZStack {
+                    Color.secondary.opacity(0.15)
+                    Image(systemName: "photo")
+                        .foregroundStyle(.secondary)
+                        .font(.title2)
+                }
+            }
+        }
+        .frame(width: size, height: size)
+//        .clipShape(RoundedRectangle(cornerRadius: size * 0.15))
+        .task { await self.loadImage() }
+    }
+    
+    private func loadImage() async {
+        guard let url else { return self.state = .error }
+        
+        guard let image = await Services.imageService.fetchImage(for: url)
+        else {
+            self.state = .error
+            return
+        }
+        
+        self.image = image
+        
+        withAnimation {
+            self.state = .idle
+        }
+    }
+}
+
+

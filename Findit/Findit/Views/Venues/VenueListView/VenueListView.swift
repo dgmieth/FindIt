@@ -5,7 +5,7 @@ struct VenueListView: View {
     
     @State private var searchText: String = ""
     
-    private var filteredArtists: [Venue] {
+    private var filtereVenues: [Venue] {
         if searchText.isEmpty {
             return viewModel.venues
         }
@@ -25,7 +25,7 @@ struct VenueListView: View {
                     description: Text(message)
                 )
             } else {
-                List(viewModel.venues) { venue in
+                List(self.filtereVenues) { venue in
                     NavigationLink(destination: VenueDetailView(venue: venue)) {
                         VenueRowView(venue: venue)
                     }
@@ -50,7 +50,8 @@ private struct VenueRowView: View {
 
     var body: some View {
         HStack(spacing: 14) {
-            EntityImageView(url: venue.imageURL, size: 56)
+            ImageView(url: venue.imageURL, size: 56)
+            
             Text(venue.name)
                 .font(.headline)
         }

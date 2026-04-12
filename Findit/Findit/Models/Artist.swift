@@ -1,6 +1,6 @@
 import Foundation
 
-struct Artist: Codable, Identifiable, Hashable {
+struct Artist: Codable, Identifiable, Hashable, Sendable {
     let id: Int
     let name: String
     let genre: String

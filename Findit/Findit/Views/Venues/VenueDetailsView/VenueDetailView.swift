@@ -9,7 +9,7 @@ struct VenueDetailView: View {
             VStack(spacing: 0) {
                 // ── Header ──
                 VStack(spacing: 14) {
-                    EntityImageView(url: venue.imageURL, size: 160)
+                    ImageView(url: venue.imageURL, size: 160)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 6, y: 3)
 
@@ -64,7 +64,7 @@ private struct VenuePerformanceRow: View {
 
     var body: some View {
         HStack(spacing: 14) {
-            EntityImageView(url: performance.artist.imageURL, size: 56)
+            ImageView(url: performance.artist.imageURL, size: 56)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
 
             VStack(alignment: .leading, spacing: 3) {

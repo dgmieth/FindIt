@@ -7,28 +7,27 @@
 
 import Foundation
 
-protocol HTTPClientProtocol {
-    func fetch<T: Decodable>(endpoint: EndpointProtocol) async throws -> T
+protocol HTTPClientProtocol: Sendable {
+    func fetch<T: Decodable & Sendable>(endpoint: EndpointProtocol) async throws -> T
 }
 
-final class HTTPClient: HTTPClientProtocol {
+actor HTTPClient: HTTPClientProtocol {
     private let server: Servers
     private let session: URLSession
     private let decoder: JSONDecoder
     
-    init(server: Servers, urlSession: URLSession = .shared, decoder: JSONDecoder = JSONDecoder()) {
+    public init(server: Servers, urlSession: URLSession = .shared, decoder: JSONDecoder = JSONDecoder()) {
         self.server = server
         self.session = urlSession
         self.decoder = decoder
     }
     
-    func fetch<T: Decodable>(endpoint: EndpointProtocol) async throws -> T {
-        guard let url = URL(string: self.server.getServerAddress() + endpoint.path) else {
+    func fetch<T: Decodable & Sendable>(endpoint: EndpointProtocol) async throws -> T {
+        guard let request = endpoint.generateRequest(for: self.server.getServerAddress())
+        else {
             throw APIError.invalidURL
         }
 
-        let request = self.createRequest(for: url, endpoint: endpoint)
-        
         do {
             let (data, response) = try await session.data(for: request)
             
@@ -46,14 +45,6 @@ final class HTTPClient: HTTPClientProtocol {
         } catch {
             throw APIError.networkError(error)
         }
-    }
-    
-    private func createRequest(for url: URL, endpoint: EndpointProtocol) -> URLRequest {
-        let urlParams = endpoint.queryParams?.compactMap {
-            URLQueryItem(name: $0.key, value: $0.value)
-        } ?? []
-        
-        return URLRequest(url: url.appending(queryItems: urlParams))
     }
 }
 

@@ -1,7 +1,7 @@
 import Foundation
 
 // Performance returned from /artists/{id}/performances
-struct ArtistPerformance: Codable, Identifiable {
+struct ArtistPerformance: Codable, Identifiable, Sendable {
     let id: Int
     let artistId: Int
     let date: String
@@ -13,7 +13,7 @@ struct ArtistPerformance: Codable, Identifiable {
 }
 
 // Performance returned from /venues/{id}/performances
-struct VenuePerformance: Codable, Identifiable {
+struct VenuePerformance: Codable, Identifiable, Sendable {
     let id: Int
     let venueId: Int
     let date: String
@@ -25,7 +25,7 @@ struct VenuePerformance: Codable, Identifiable {
 }
 
 // Lightweight venue embedded inside ArtistPerformance
-struct PerformanceVenue: Codable, Identifiable, Hashable {
+struct PerformanceVenue: Codable, Identifiable, Hashable, Sendable {
     let id: Int
     let name: String
     let sortId: Int
@@ -37,7 +37,7 @@ struct PerformanceVenue: Codable, Identifiable, Hashable {
 }
 
 // Lightweight artist embedded inside VenuePerformance
-struct PerformanceArtist: Codable, Identifiable, Hashable {
+struct PerformanceArtist: Codable, Identifiable, Hashable, Sendable {
     let id: Int
     let name: String
     let genre: String
