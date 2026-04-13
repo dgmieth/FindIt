@@ -10,6 +10,11 @@ struct ArtistListView: View {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
 
+    init(viewModel: ArtistListViewModel, searchText: String) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self._searchText = State(initialValue: searchText)
+    }
+
     init() {}
     
     private var filteredArtists: [Artist] {

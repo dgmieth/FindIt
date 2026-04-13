@@ -13,6 +13,11 @@ struct VenueDetailView: View {
     init(viewModel: VenueDetailViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
+
+    init(viewModel: VenueDetailViewModel, searchText: String) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self._searchText = State(initialValue: searchText)
+    }
     
     private var filteredVenuePerformances: [VenuePerformance] {
         if searchText.isEmpty {

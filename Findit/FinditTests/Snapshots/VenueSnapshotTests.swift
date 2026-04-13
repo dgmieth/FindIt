@@ -103,4 +103,47 @@ final class VenueSnapshotTests: XCTestCase {
         .environment(\.testImageOverride, sampleImage)
         assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
+
+    // MARK: - Search
+
+    func testVenueListSearchWithResults() {
+        let vm = VenueListViewModel(venues: MockData.venues)
+        let view = NavigationStack {
+            VenueListView(viewModel: vm, searchText: "Forum")
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testVenueListSearchNoResults() {
+        let vm = VenueListViewModel(venues: MockData.venues)
+        let view = NavigationStack {
+            VenueListView(viewModel: vm, searchText: "xyz")
+        }
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testVenueDetailSearchWithResults() {
+        let vm = VenueDetailViewModel(
+            venue: MockData.venue1,
+            performances: MockData.venuePerformances
+        )
+        let view = NavigationStack {
+            VenueDetailView(viewModel: vm, searchText: "Rolling")
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testVenueDetailSearchNoResults() {
+        let vm = VenueDetailViewModel(
+            venue: MockData.venue1,
+            performances: MockData.venuePerformances
+        )
+        let view = NavigationStack {
+            VenueDetailView(viewModel: vm, searchText: "xyz")
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
 }

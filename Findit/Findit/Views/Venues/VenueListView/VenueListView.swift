@@ -9,6 +9,11 @@ struct VenueListView: View {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
 
+    init(viewModel: VenueListViewModel, searchText: String) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self._searchText = State(initialValue: searchText)
+    }
+
     init() {}
     
     private var filteredVenues: [Venue] {

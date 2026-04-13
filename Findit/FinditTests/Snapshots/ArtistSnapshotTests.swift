@@ -104,4 +104,47 @@ final class ArtistSnapshotTests: XCTestCase {
         .environment(\.testImageOverride, sampleImage)
         assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
+
+    // MARK: - Search
+
+    func testArtistListSearchWithResults() {
+        let vm = ArtistListViewModel(artists: MockData.artists)
+        let view = NavigationStack {
+            ArtistListView(viewModel: vm, searchText: "Adele")
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testArtistListSearchNoResults() {
+        let vm = ArtistListViewModel(artists: MockData.artists)
+        let view = NavigationStack {
+            ArtistListView(viewModel: vm, searchText: "xyz")
+        }
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testArtistDetailSearchWithResults() {
+        let vm = ArtistDetailViewModel(
+            artist: MockData.artist1,
+            performances: MockData.artistPerformances
+        )
+        let view = NavigationStack {
+            ArtistDetailView(viewModel: vm, searchText: "Madison")
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testArtistDetailSearchNoResults() {
+        let vm = ArtistDetailViewModel(
+            artist: MockData.artist1,
+            performances: MockData.artistPerformances
+        )
+        let view = NavigationStack {
+            ArtistDetailView(viewModel: vm, searchText: "xyz")
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
 }

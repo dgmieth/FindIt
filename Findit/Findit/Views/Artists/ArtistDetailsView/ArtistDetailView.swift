@@ -13,6 +13,11 @@ struct ArtistDetailView: View {
     init(viewModel: ArtistDetailViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
+
+    init(viewModel: ArtistDetailViewModel, searchText: String) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self._searchText = State(initialValue: searchText)
+    }
     
     private var filteredArtistPerformances: [ArtistPerformance] {
         if searchText.isEmpty {
