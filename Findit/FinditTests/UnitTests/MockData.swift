@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapshotTesting
 @testable import Findit
 
 // Used to locate the FinditTests bundle for asset loading.
@@ -52,4 +53,13 @@ enum MockData {
                 compatibleWith: nil)
             ?? UIImage(systemName: "photo")!
     }
+}
+
+// MARK: - Snapshot configuration
+
+extension Snapshotting where Value == UIViewController, Format == UIImage {
+    static let lightIPhone13Pro: Snapshotting = .image(
+        on: .iPhone13Pro,
+        traits: UITraitCollection(userInterfaceStyle: .light)
+    )
 }

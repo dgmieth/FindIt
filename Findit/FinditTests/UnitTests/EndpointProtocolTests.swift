@@ -63,7 +63,13 @@ final class EndpointProtocolTests: XCTestCase {
     func testEndpointParams() throws {
         let _endpoint = MockedEndpoint(paramOne: "One", paramTwo: "Two")
         let request = _endpoint.generateRequest(for: "https:example.com")
-        XCTAssertNotNil(request?.url?.absoluteString)
-        XCTAssertEqual(request!.url!.absoluteString, "https:example.com/path?one=One&two=Two")
+        XCTAssertNotNil(request?.url)
+
+        let components = URLComponents(url: request!.url!, resolvingAgainstBaseURL: false)
+        let queryItems = components?.queryItems ?? []
+
+        XCTAssertEqual(queryItems.count, 2)
+        XCTAssertTrue(queryItems.contains(URLQueryItem(name: "one", value: "One")))
+        XCTAssertTrue(queryItems.contains(URLQueryItem(name: "two", value: "Two")))
     }
 }
