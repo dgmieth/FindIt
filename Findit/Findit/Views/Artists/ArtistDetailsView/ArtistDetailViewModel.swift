@@ -14,10 +14,29 @@ final class ArtistDetailViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     @Published var filterSelection: FilterOptions = .next14Days
-    @Published var startDate: Date?
-    @Published var endDate: Date?
+    var startDate: Date?
+    var endDate: Date?
     
     let artist: Artist
+    
+    var titleForResults: String {
+        if self.filterSelection == .custom {
+            switch (self.startDate, self.endDate) {
+            case (.some(let startDate), .some(let endDate)):
+                let startDateString = DateFormatter.formatter(for: .apiQueryFormat).string(from: startDate)
+                let endDateString = DateFormatter.formatter(for: .apiQueryFormat).string(from: endDate)
+                return R.string.localizable.viewsFilterOptionLowerUpperBounds(startDateString, endDateString)
+            case (.some(let startDate), _):
+                let startDateString = DateFormatter.formatter(for: .apiQueryFormat).string(from: startDate)
+                return R.string.localizable.viewsFilterOptionOnlyLowerBound(startDateString)
+            case (_, .some(let endDate)):
+                let endDateString = DateFormatter.formatter(for: .apiQueryFormat).string(from: endDate)
+                return R.string.localizable.viewsFilterOptionOnlyUpperBound(endDateString)
+            default: return ""
+            }
+        }
+        return self.filterSelection.rawValue
+    }
     
     init(artist: Artist) {
         self.artist = artist

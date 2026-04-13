@@ -202,8 +202,6 @@ struct FilterView: View {
             HStack(alignment: .center, spacing: 12) {
                 Button {
                     self.filterOption = .next14Days
-                    self.startDate = nil
-                    self.endDate = nil
                     
                     self.commitFilters()
                 } label: {
@@ -235,6 +233,10 @@ struct FilterView: View {
                 )
                 .disabled(self.showResultsDisabled)
             }
+        }
+        .onChange(of: self.filterOption) {
+            self.startDate = nil
+            self.endDate = nil
         }
         .padding(.horizontal, 12)
         .sheet(isPresented: $showStartPicker) {

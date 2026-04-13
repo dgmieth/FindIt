@@ -3,14 +3,25 @@ import SwiftUI
 struct VenueDetailView: View {
     @StateObject private var viewModel: VenueDetailViewModel
     @State private var showFilters: Bool = false
+    @State private var searchText: String = ""
     
     init(venue: Venue) {
         self._viewModel = .init(wrappedValue: .init(venue: venue))
     }
-
+    
     // MARK: - Testing Support
     init(viewModel: VenueDetailViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
+    private var filteredVenuePerformances: [VenuePerformance] {
+        if searchText.isEmpty {
+            return viewModel.performances
+        }
+        return viewModel.performances.filter {
+            $0.artist.name.localizedCaseInsensitiveContains(searchText) ||
+            $0.artist.genre.localizedStandardContains(searchText)
+        }
     }
     
     var body: some View {
@@ -31,12 +42,23 @@ struct VenueDetailView: View {
                 Divider()
 
                 // ── Performances ──
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(self.viewModel.filterSelection.rawValue)
-                        .font(.headline)
-                        .padding(.horizontal)
-                        .padding(.top, 16)
-                        .padding(.bottom, 8)
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(self.viewModel.titleForResults)
+                            .font(.headline)
+                        
+                        HStack(alignment: .center, spacing: 2) {
+                            Text(self.filteredVenuePerformances.count.toString())
+                                .font(.subheadline)
+                            
+                            Text(R.string.localizable.viewsVenuesDetailsPerformancesResultsCount(self.filteredVenuePerformances.count))
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 16)
+                    .padding(.bottom, 8)
 
                     if viewModel.isLoading {
                         HStack { Spacer(); ProgressView(); Spacer() }
@@ -52,7 +74,7 @@ struct VenueDetailView: View {
                         )
                         .padding()
                     } else {
-                        ForEach(viewModel.performances) { performance in
+                        ForEach(self.filteredVenuePerformances) { performance in
                             VenuePerformanceRow(performance: performance)
                             Divider().padding(.leading, 82)
                         }
@@ -61,10 +83,15 @@ struct VenueDetailView: View {
             }
         }
         .navigationTitle(self.viewModel.venue.name)
+        .searchable(
+            text: self.$searchText,
+            placement: .navigationBarDrawer,
+            prompt: Text(R.string.localizable.viewsVenuesDetailsSearchPlaceholder())
+        )
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    self.showFilters.toggle()
+                    self.showFilters = true
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                         .resizable()

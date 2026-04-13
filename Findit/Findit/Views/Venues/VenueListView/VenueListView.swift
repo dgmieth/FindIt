@@ -2,7 +2,6 @@ import SwiftUI
 
 struct VenueListView: View {
     @StateObject private var viewModel = VenueListViewModel()
-    
     @State private var searchText: String = ""
 
     // MARK: - Testing Support
@@ -12,7 +11,7 @@ struct VenueListView: View {
 
     init() {}
     
-    private var filtereVenues: [Venue] {
+    private var filteredVenues: [Venue] {
         if searchText.isEmpty {
             return viewModel.venues
         }
@@ -32,7 +31,7 @@ struct VenueListView: View {
                     description: Text(message)
                 )
             } else {
-                List(self.filtereVenues) { venue in
+                List(self.filteredVenues) { venue in
                     NavigationLink(destination: VenueDetailView(venue: venue)) {
                         VenueRowView(venue: venue)
                     }

@@ -3,6 +3,7 @@ import SwiftUI
 struct ArtistDetailView: View {
     @StateObject private var viewModel: ArtistDetailViewModel
     @State private var showFilters: Bool = false
+    @State private var searchText: String = ""
     
     init(artist: Artist) {
         self._viewModel = .init(wrappedValue: .init(artist: artist))
@@ -11,6 +12,15 @@ struct ArtistDetailView: View {
     // MARK: - Testing Support
     init(viewModel: ArtistDetailViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
+    private var filteredArtistPerformances: [ArtistPerformance] {
+        if searchText.isEmpty {
+            return viewModel.performances
+        }
+        return viewModel.performances.filter {
+            $0.venue.name.localizedCaseInsensitiveContains(self.searchText)
+        }
     }
     
     var body: some View {
@@ -36,12 +46,23 @@ struct ArtistDetailView: View {
                 Divider()
                 
                 // ── Performances ──
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(self.viewModel.filterSelection.rawValue)
-                        .font(.headline)
-                        .padding(.horizontal)
-                        .padding(.top, 16)
-                        .padding(.bottom, 8)
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(self.viewModel.titleForResults)
+                            .font(.headline)
+                        
+                        HStack(alignment: .center, spacing: 2) {
+                            Text(self.filteredArtistPerformances.count.toString())
+                                .font(.subheadline)
+                            
+                            Text(R.string.localizable.viewsArtistsDetailsPerformancesResultsCount(self.filteredArtistPerformances.count))
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 16)
+                    .padding(.bottom, 8)
                     
                     if viewModel.isLoading {
                         HStack { Spacer(); ProgressView(); Spacer() }
@@ -57,7 +78,7 @@ struct ArtistDetailView: View {
                         )
                         .padding()
                     } else {
-                        ForEach(viewModel.performances) { performance in
+                        ForEach(self.filteredArtistPerformances) { performance in
                             ArtistPerformanceRow(performance: performance)
                             Divider().padding(.leading, 82)
                         }
@@ -66,10 +87,15 @@ struct ArtistDetailView: View {
             }
         }
         .navigationTitle(self.viewModel.artist.name)
+        .searchable(
+            text: self.$searchText,
+            placement: .navigationBarDrawer,
+            prompt: Text(R.string.localizable.viewsArtistsDetailsSearchPlaceholder())
+        )
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    self.showFilters.toggle()
+                    self.showFilters = true
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                         .resizable()
