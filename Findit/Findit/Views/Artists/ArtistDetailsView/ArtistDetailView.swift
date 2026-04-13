@@ -32,7 +32,7 @@ struct ArtistDetailView: View {
                 
                 // ── Performances ──
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(R.string.localizable.viewsArtistsDetailsPerformancesNext14Days())
+                    Text(self.viewModel.filterSelection.rawValue)
                         .font(.headline)
                         .padding(.horizontal)
                         .padding(.top, 16)
@@ -80,7 +80,10 @@ struct ArtistDetailView: View {
         .task { await viewModel.loadPerformances() }
         .sheet(isPresented: self.$showFilters) {
             FilterView(
-                filterOption: self.$viewModel.filterSelection
+                filterOption: self.viewModel.filterSelection,
+                startDate: self.viewModel.startDate,
+                endDate: self.viewModel.endDate,
+                onApply: self.viewModel.updateViewModel(_:_:_:)
             )
             .presentationDetents([.medium])
             .presentationDragIndicator(.visible)

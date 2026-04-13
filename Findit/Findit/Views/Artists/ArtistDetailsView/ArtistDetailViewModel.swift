@@ -13,7 +13,10 @@ final class ArtistDetailViewModel: ObservableObject {
     @Published var performances: [ArtistPerformance] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
+    
     @Published var filterSelection: FilterOptions = .next14Days
+    @Published var startDate: Date?
+    @Published var endDate: Date?
     
     let artist: Artist
     
@@ -32,6 +35,12 @@ final class ArtistDetailViewModel: ObservableObject {
                 }
             }
     }
+    
+    func updateViewModel(_ filterSelection: FilterOptions, _ startDate: Date?, _ endDate: Date?) {
+        self.startDate = startDate
+        self.endDate = endDate
+        self.filterSelection = filterSelection
+    }
 
     func loadPerformances() async {
         switch self.filterSelection {
@@ -48,8 +57,8 @@ final class ArtistDetailViewModel: ObservableObject {
             let today = Date()
             let twoWeeksLater = Calendar.current.date(byAdding: .day, value: 60, to: today) ?? today
             await self.filterPerformances(startDate: today, endDate: twoWeeksLater)
-        case .custom(let startDate, let endDate):
-            await self.filterPerformances(startDate: startDate, endDate: endDate)
+        case .custom:
+            await self.filterPerformances(startDate: self.startDate, endDate: self.endDate)
         }
         
         self.initialLoad = false

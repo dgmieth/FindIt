@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 @MainActor
 final class VenueDetailViewModel: ObservableObject {
@@ -13,20 +14,65 @@ final class VenueDetailViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     
-    init() { }
+    @Published var filterSelection: FilterOptions = .next14Days
+    @Published var startDate: Date?
+    @Published var endDate: Date?
+    
+    let venue: Venue
+    
+    private var initialLoad = true
+    
+    private var cancellable: AnyCancellable?
+    
+    init(venue: Venue) {
+        self.venue = venue
+        
+        self.cancellable = self.$filterSelection
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                Task {
+                    await self.loadPerformances()
+                }
+            }
+    }
+    
+    func updateViewModel(_ filterSelection: FilterOptions, _ startDate: Date?, _ endDate: Date?) {
+        self.startDate = startDate
+        self.endDate = endDate
+        self.filterSelection = filterSelection
+    }
 
-    func loadPerformances(for venue: Venue) async {
+    func loadPerformances() async {
+        switch self.filterSelection {
+        case .next14Days:
+            // AC -> The detail will contain all the performances for that entity for the current day and the following two weeks.
+            let today = Date()
+            let twoWeeksLater = Calendar.current.date(byAdding: .day, value: 14, to: today) ?? today
+            await self.filterPerformances(startDate: today, endDate: twoWeeksLater)
+        case .next30Days:
+            let today = Date()
+            let twoWeeksLater = Calendar.current.date(byAdding: .day, value: 30, to: today) ?? today
+            await self.filterPerformances(startDate: today, endDate: twoWeeksLater)
+        case .next60Days:
+            let today = Date()
+            let twoWeeksLater = Calendar.current.date(byAdding: .day, value: 60, to: today) ?? today
+            await self.filterPerformances(startDate: today, endDate: twoWeeksLater)
+        case .custom:
+            await self.filterPerformances(startDate: self.startDate, endDate: self.endDate)
+        }
+        
+        self.initialLoad = false
+    }
+    
+    private func filterPerformances(startDate: Date?, endDate: Date?) async {
         self.isLoading = true
         self.errorMessage = nil
-        
-        let today = Date()
-        let twoWeeksLater = Calendar.current.date(byAdding: .day, value: 14, to: today) ?? today
         
         do {
             self.performances = try await Services.venueService.fetchVenuePerformances(
                 venueId: venue.id,
-                from: today,
-                to: twoWeeksLater
+                from: startDate,
+                to: endDate
             )
         } catch {
             self.errorMessage = error.localizedDescription

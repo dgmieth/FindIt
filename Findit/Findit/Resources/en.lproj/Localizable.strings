@@ -11,7 +11,6 @@
 "Views.Artists.Lists.Search.Placeholder" = "Artists or genre";
 "Views.Artists.Lists.NavBar.Title" = "Artists";
 
-"Views.Artists.Details.Performances.Next14Days" = "Next 14 Days";
 "Views.Artists.Details.Performances.Error.NoData" = "No upcoming performances";
 
 "Views.Venues.Lists.State.Loading"= "Loading venues…";
@@ -29,3 +28,9 @@
 "Views.Filter.Option.LowerUpperBounds" = "From %@ to %@";
 "Views.Filter.Option.OnlyUpperBound" = "Before %@";
 "Views.Filter.Option.OnlyLowerBound" = "After %@";
+"Views.Filter.Picker.Title" = "Results for";
+"Views.Filter.Button.Reset" = "Reset";
+"Views.Filter.Picker.ShowResults" = "Show results";
+"Views.Filter.DatePicker.From" = "From";
+"Views.Filter.DatePicker.To" = "To";
+"Views.Filter.DatePicker.SelectDate" = "Select date";
