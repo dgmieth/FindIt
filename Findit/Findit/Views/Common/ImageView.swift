@@ -55,7 +55,6 @@ struct ImageView: View {
                 }
             }
             .frame(width: size, height: size)
-    //        .clipShape(RoundedRectangle(cornerRadius: size * 0.15))
             .task { await self.loadImage() }
         }
     }

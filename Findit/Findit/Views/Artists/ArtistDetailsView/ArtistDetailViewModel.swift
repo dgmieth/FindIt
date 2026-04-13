@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 @MainActor
 final class ArtistDetailViewModel: ObservableObject {
@@ -20,20 +19,8 @@ final class ArtistDetailViewModel: ObservableObject {
     
     let artist: Artist
     
-    private var initialLoad = true
-    
-    private var cancellable: AnyCancellable?
-    
     init(artist: Artist) {
         self.artist = artist
-        
-        self.cancellable = self.$filterSelection
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                Task {
-                    await self.loadPerformances()
-                }
-            }
     }
 
     // MARK: - Testing Support
@@ -48,6 +35,10 @@ final class ArtistDetailViewModel: ObservableObject {
         self.startDate = startDate
         self.endDate = endDate
         self.filterSelection = filterSelection
+        
+        Task {
+            await self.loadPerformances()
+        }
     }
 
     func loadPerformances() async {
@@ -63,13 +54,11 @@ final class ArtistDetailViewModel: ObservableObject {
             await self.filterPerformances(startDate: today, endDate: monthLater)
         case .next60Days:
             let today = Date()
-            let towMonthsLater = Calendar.current.date(byAdding: .day, value: 60, to: today) ?? today
-            await self.filterPerformances(startDate: today, endDate: towMonthsLater)
+            let twoMonthsLater = Calendar.current.date(byAdding: .day, value: 60, to: today) ?? today
+            await self.filterPerformances(startDate: today, endDate: twoMonthsLater)
         case .custom:
             await self.filterPerformances(startDate: self.startDate, endDate: self.endDate)
         }
-        
-        self.initialLoad = false
     }
     
     private func filterPerformances(startDate: Date?, endDate: Date?) async {
