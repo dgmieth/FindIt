@@ -4,6 +4,13 @@ struct ArtistListView: View {
     @StateObject private var viewModel = ArtistListViewModel()
 
     @State private var searchText: String = ""
+
+    // MARK: - Testing Support
+    init(viewModel: ArtistListViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+
+    init() {}
     
     private var filteredArtists: [Artist] {
         if searchText.isEmpty {

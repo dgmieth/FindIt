@@ -7,6 +7,11 @@ struct VenueDetailView: View {
     init(venue: Venue) {
         self._viewModel = .init(wrappedValue: .init(venue: venue))
     }
+
+    // MARK: - Testing Support
+    init(viewModel: VenueDetailViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         ScrollView {

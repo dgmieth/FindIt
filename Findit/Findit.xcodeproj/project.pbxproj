@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		38C2C1482F87F6AE002733FA /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 38C2C1472F87F6AE002733FA /* RswiftLibrary */; };
+		38EFB3C42F8C8CD200BA3087 /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 38EFB3C32F8C8CD200BA3087 /* InlineSnapshotTesting */; };
+		38EFB3C62F8C8CD200BA3087 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 38EFB3C52F8C8CD200BA3087 /* SnapshotTesting */; };
+		38EFB3C82F8C8CD200BA3087 /* SnapshotTestingCustomDump in Frameworks */ = {isa = PBXBuildFile; productRef = 38EFB3C72F8C8CD200BA3087 /* SnapshotTestingCustomDump */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38EFB3C82F8C8CD200BA3087 /* SnapshotTestingCustomDump in Frameworks */,
+				38EFB3C42F8C8CD200BA3087 /* InlineSnapshotTesting in Frameworks */,
+				38EFB3C62F8C8CD200BA3087 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +126,9 @@
 			);
 			name = FinditTests;
 			packageProductDependencies = (
+				38EFB3C32F8C8CD200BA3087 /* InlineSnapshotTesting */,
+				38EFB3C52F8C8CD200BA3087 /* SnapshotTesting */,
+				38EFB3C72F8C8CD200BA3087 /* SnapshotTestingCustomDump */,
 			);
 			productName = FinditTests;
 			productReference = 38EFB36E2F8C80C400BA3087 /* FinditTests.xctest */;
@@ -155,6 +164,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				38C2C1462F87F6AE002733FA /* XCRemoteSwiftPackageReference "R.swift" */,
+				38EFB3C22F8C8CD200BA3087 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 38C2C1102F87F26F002733FA /* Products */;
@@ -490,6 +500,14 @@
 				minimumVersion = 7.8.0;
 			};
 		};
+		38EFB3C22F8C8CD200BA3087 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.19.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -502,6 +520,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 38C2C1462F87F6AE002733FA /* XCRemoteSwiftPackageReference "R.swift" */;
 			productName = "plugin:RswiftGenerateInternalResources";
+		};
+		38EFB3C32F8C8CD200BA3087 /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 38EFB3C22F8C8CD200BA3087 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
+		};
+		38EFB3C52F8C8CD200BA3087 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 38EFB3C22F8C8CD200BA3087 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		38EFB3C72F8C8CD200BA3087 /* SnapshotTestingCustomDump */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 38EFB3C22F8C8CD200BA3087 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTestingCustomDump;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

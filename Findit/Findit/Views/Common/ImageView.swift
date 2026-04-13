@@ -19,6 +19,7 @@ struct ImageView: View {
     
     @State private var image: UIImage? = nil
     @State private var state: ImageViewState = .loading
+    @Environment(\.testImageOverride) private var testImageOverride
     
     init(url: URL?, size: CGFloat) {
         self.url = url
@@ -26,29 +27,37 @@ struct ImageView: View {
     }
     
     var body: some View {
-        VStack(alignment: .center, spacing: 0) {
-            switch self.state {
-            case .loading:
-                ZStack {
-                    Color.secondary.opacity(0.15)
-                    ProgressView()
-                }
-            case .idle:
-                Image(uiImage: self.image ?? UIImage())
-                    .resizable()
-                    .scaledToFit()
-            case .error:
-                ZStack {
-                    Color.secondary.opacity(0.15)
-                    Image(systemName: "photo")
-                        .foregroundStyle(.secondary)
-                        .font(.title2)
+        if let overrideImage = testImageOverride {
+            Image(uiImage: overrideImage)
+                .resizable()
+                .scaledToFill()
+                .frame(width: size, height: size)
+                .clipped()
+        } else {
+            VStack(alignment: .center, spacing: 0) {
+                switch self.state {
+                case .loading:
+                    ZStack {
+                        Color.secondary.opacity(0.15)
+                        ProgressView()
+                    }
+                case .idle:
+                    Image(uiImage: self.image ?? UIImage())
+                        .resizable()
+                        .scaledToFit()
+                case .error:
+                    ZStack {
+                        Color.secondary.opacity(0.15)
+                        Image(systemName: "photo")
+                            .foregroundStyle(.secondary)
+                            .font(.title2)
+                    }
                 }
             }
+            .frame(width: size, height: size)
+    //        .clipShape(RoundedRectangle(cornerRadius: size * 0.15))
+            .task { await self.loadImage() }
         }
-        .frame(width: size, height: size)
-//        .clipShape(RoundedRectangle(cornerRadius: size * 0.15))
-        .task { await self.loadImage() }
     }
     
     private func loadImage() async {
@@ -68,4 +77,15 @@ struct ImageView: View {
     }
 }
 
+// MARK: - Environment key for snapshot testing
 
+private struct TestImageOverrideKey: EnvironmentKey {
+    static let defaultValue: UIImage? = nil
+}
+
+extension EnvironmentValues {
+    var testImageOverride: UIImage? {
+        get { self[TestImageOverrideKey.self] }
+        set { self[TestImageOverrideKey.self] = newValue }
+    }
+}

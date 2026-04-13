@@ -4,6 +4,13 @@ struct VenueListView: View {
     @StateObject private var viewModel = VenueListViewModel()
     
     @State private var searchText: String = ""
+
+    // MARK: - Testing Support
+    init(viewModel: VenueListViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+
+    init() {}
     
     private var filtereVenues: [Venue] {
         if searchText.isEmpty {

@@ -7,6 +7,11 @@ struct ArtistDetailView: View {
     init(artist: Artist) {
         self._viewModel = .init(wrappedValue: .init(artist: artist))
     }
+
+    // MARK: - Testing Support
+    init(viewModel: ArtistDetailViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         ScrollView {

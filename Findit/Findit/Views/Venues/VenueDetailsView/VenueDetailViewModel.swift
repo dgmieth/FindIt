@@ -35,6 +35,14 @@ final class VenueDetailViewModel: ObservableObject {
                 }
             }
     }
+
+    // MARK: - Testing Support
+    init(venue: Venue, performances: [VenuePerformance], isLoading: Bool = false, errorMessage: String? = nil) {
+        self.venue = venue
+        self.performances = performances
+        self.isLoading = isLoading
+        self.errorMessage = errorMessage
+    }
     
     func updateViewModel(_ filterSelection: FilterOptions, _ startDate: Date?, _ endDate: Date?) {
         self.startDate = startDate

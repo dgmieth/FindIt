@@ -14,6 +14,12 @@ final class ArtistListViewModel: ObservableObject {
     
     init() { }
 
+    // MARK: - Testing Support
+    init(artists: [Artist]) {
+        self.artists = artists
+        self.isLoading = false
+    }
+
     func loadArtists() async {
         self.isLoading = true
         self.errorMessage = nil

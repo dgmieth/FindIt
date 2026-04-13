@@ -15,6 +15,12 @@ final class VenueListViewModel: ObservableObject {
     
     init() { }
 
+    // MARK: - Testing Support
+    init(venues: [Venue]) {
+        self.venues = venues
+        self.isLoading = false
+    }
+
     func loadVenues() async {
         self.isLoading = true
         self.errorMessage = nil

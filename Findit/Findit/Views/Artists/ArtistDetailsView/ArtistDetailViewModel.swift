@@ -35,6 +35,14 @@ final class ArtistDetailViewModel: ObservableObject {
                 }
             }
     }
+
+    // MARK: - Testing Support
+    init(artist: Artist, performances: [ArtistPerformance], isLoading: Bool = false, errorMessage: String? = nil) {
+        self.artist = artist
+        self.performances = performances
+        self.isLoading = isLoading
+        self.errorMessage = errorMessage
+    }
     
     func updateViewModel(_ filterSelection: FilterOptions, _ startDate: Date?, _ endDate: Date?) {
         self.startDate = startDate
