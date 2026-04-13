@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum RecodMode {
+enum RecordMode {
     static let recording: Bool = false
 }

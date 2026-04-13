@@ -23,7 +23,7 @@ final class VenueSnapshotTests: XCTestCase {
             VenueListView(viewModel: vm)
         }
         .environment(\.testImageOverride, sampleImage)
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testVenueListLoading() {
@@ -32,7 +32,7 @@ final class VenueSnapshotTests: XCTestCase {
         let view = NavigationStack {
             VenueListView(viewModel: vm)
         }
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testVenueListError() {
@@ -41,7 +41,7 @@ final class VenueSnapshotTests: XCTestCase {
         let view = NavigationStack {
             VenueListView(viewModel: vm)
         }
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testVenueListEmpty() {
@@ -49,7 +49,7 @@ final class VenueSnapshotTests: XCTestCase {
         let view = NavigationStack {
             VenueListView(viewModel: vm)
         }
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     // MARK: - VenueDetailView
@@ -63,7 +63,7 @@ final class VenueSnapshotTests: XCTestCase {
             VenueDetailView(viewModel: vm)
         }
         .environment(\.testImageOverride, sampleImage)
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testVenueDetailLoading() {
@@ -76,7 +76,7 @@ final class VenueSnapshotTests: XCTestCase {
             VenueDetailView(viewModel: vm)
         }
         .environment(\.testImageOverride, sampleImage)
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testVenueDetailError() {
@@ -89,7 +89,7 @@ final class VenueSnapshotTests: XCTestCase {
             VenueDetailView(viewModel: vm)
         }
         .environment(\.testImageOverride, sampleImage)
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testVenueDetailEmpty() {
@@ -101,6 +101,6 @@ final class VenueSnapshotTests: XCTestCase {
             VenueDetailView(viewModel: vm)
         }
         .environment(\.testImageOverride, sampleImage)
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 }

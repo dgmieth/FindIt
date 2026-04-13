@@ -24,7 +24,7 @@ final class ArtistSnapshotTests: XCTestCase {
         }
         .environment(\.testImageOverride, sampleImage)
         
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testArtistListLoading() {
@@ -33,7 +33,7 @@ final class ArtistSnapshotTests: XCTestCase {
         let view = NavigationStack {
             ArtistListView(viewModel: vm)
         }
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testArtistListError() {
@@ -42,7 +42,7 @@ final class ArtistSnapshotTests: XCTestCase {
         let view = NavigationStack {
             ArtistListView(viewModel: vm)
         }
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testArtistListEmpty() {
@@ -50,7 +50,7 @@ final class ArtistSnapshotTests: XCTestCase {
         let view = NavigationStack {
             ArtistListView(viewModel: vm)
         }
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     // MARK: - ArtistDetailView
@@ -64,7 +64,7 @@ final class ArtistSnapshotTests: XCTestCase {
             ArtistDetailView(viewModel: vm)
         }
         .environment(\.testImageOverride, sampleImage)
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testArtistDetailLoading() {
@@ -77,7 +77,7 @@ final class ArtistSnapshotTests: XCTestCase {
             ArtistDetailView(viewModel: vm)
         }
         .environment(\.testImageOverride, sampleImage)
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testArtistDetailError() {
@@ -90,7 +90,7 @@ final class ArtistSnapshotTests: XCTestCase {
             ArtistDetailView(viewModel: vm)
         }
         .environment(\.testImageOverride, sampleImage)
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecodMode.recording)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 
     func testArtistDetailEmpty() {
@@ -102,6 +102,6 @@ final class ArtistSnapshotTests: XCTestCase {
             ArtistDetailView(viewModel: vm)
         }
         .environment(\.testImageOverride, sampleImage)
-        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
 }
