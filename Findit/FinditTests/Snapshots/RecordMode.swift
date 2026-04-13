@@ -8,5 +8,5 @@
 import Foundation
 
 enum RecodMode {
-    static let recording: Bool = true
+    static let recording: Bool = false
 }
