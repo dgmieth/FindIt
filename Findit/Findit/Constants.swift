@@ -7,5 +7,7 @@
 
 import Foundation
 
-let LEAP_MOBILE_INTERVIEW_API_ADDRESS = "https://api.leapmobileinterview.com"
-let SONGLEAP_AMAZON_ADRESS_FOR_IMAGES = "https://songleap.s3.amazonaws.com"
+enum Constants {
+    static let leapMobileInterViewApiAddress = "https://api.leapmobileinterview.com"
+    static let songleapAmazonAddressForImages = "https://songleap.s3.amazonaws.com"
+}

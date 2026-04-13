@@ -14,14 +14,20 @@ struct ContentView: View {
                 ArtistListView()
             }
             .tabItem {
-                Label("Artists", systemImage: "music.mic")
+                Label(
+                    R.string.localizable.viewsContentViewTabsArtists(),
+                    systemImage: "music.mic"
+                )
             }
 
             NavigationStack {
                 VenueListView()
             }
             .tabItem {
-                Label("Venues", systemImage: "building.2")
+                Label(
+                    R.string.localizable.viewsContentViewTabsVenues(),
+                    systemImage: "building.2"
+                )
             }
         }
     }

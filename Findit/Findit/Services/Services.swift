@@ -10,7 +10,7 @@ import Foundation
 final class Services {
     nonisolated(unsafe) private static let instance = Services()
     
-    init() {
+    private init() {
         self._artistService = ArtistService()
         self._venueService = VenueService()
         self._imageService = ImageService()

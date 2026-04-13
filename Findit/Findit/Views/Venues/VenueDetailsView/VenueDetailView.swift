@@ -32,7 +32,7 @@ struct VenueDetailView: View {
 
                 // ── Performances ──
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(R.string.localizable.viewsVenuesDetailsPerformancesNext14Days())
+                    Text(self.viewModel.filterSelection.rawValue)
                         .font(.headline)
                         .padding(.horizontal)
                         .padding(.top, 16)

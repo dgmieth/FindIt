@@ -13,7 +13,7 @@ enum Servers {
     func getServerAddress() -> String {
         switch self {
         case .leapInterview:
-            return LEAP_MOBILE_INTERVIEW_API_ADDRESS
+            return Constants.leapMobileInterViewApiAddress
         }
     }
     

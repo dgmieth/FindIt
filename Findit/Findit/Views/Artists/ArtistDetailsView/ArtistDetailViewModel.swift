@@ -59,12 +59,12 @@ final class ArtistDetailViewModel: ObservableObject {
             await self.filterPerformances(startDate: today, endDate: twoWeeksLater)
         case .next30Days:
             let today = Date()
-            let twoWeeksLater = Calendar.current.date(byAdding: .day, value: 30, to: today) ?? today
-            await self.filterPerformances(startDate: today, endDate: twoWeeksLater)
+            let monthLater = Calendar.current.date(byAdding: .day, value: 30, to: today) ?? today
+            await self.filterPerformances(startDate: today, endDate: monthLater)
         case .next60Days:
             let today = Date()
-            let twoWeeksLater = Calendar.current.date(byAdding: .day, value: 60, to: today) ?? today
-            await self.filterPerformances(startDate: today, endDate: twoWeeksLater)
+            let towMonthsLater = Calendar.current.date(byAdding: .day, value: 60, to: today) ?? today
+            await self.filterPerformances(startDate: today, endDate: towMonthsLater)
         case .custom:
             await self.filterPerformances(startDate: self.startDate, endDate: self.endDate)
         }

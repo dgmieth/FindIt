@@ -23,21 +23,21 @@ struct VenuesPerformancesEndpoint: EndpointProtocol {
     }
     
     var queryParams: [String : String]? {
-        let dateFormmater = DateFormatter.formatter(for: .apiQueryFormat)
+        let dateFormatter = DateFormatter.formatter(for: .apiQueryFormat)
         
         switch (self.from, self.to) {
         case (.some(let from), .some(let to)):
             return [
-                "from": dateFormmater.string(from: from),
-                "to": dateFormmater.string(from: to)
+                "from": dateFormatter.string(from: from),
+                "to": dateFormatter.string(from: to)
             ]
         case (.some(let from), _):
             return [
-                "from": dateFormmater.string(from: from)
+                "from": dateFormatter.string(from: from)
             ]
         case (_, .some(let to)):
             return [
-                "to": dateFormmater.string(from: to)
+                "to": dateFormatter.string(from: to)
             ]
         default:
             return nil

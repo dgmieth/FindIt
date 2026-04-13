@@ -31,7 +31,7 @@ struct PerformanceVenue: Codable, Identifiable, Hashable, Sendable {
     let sortId: Int
 
     var imageURL: URL? {
-        let urlString = "\(SONGLEAP_AMAZON_ADRESS_FOR_IMAGES)/venues/\(self.name).png"
+        let urlString = "\(Constants.songleapAmazonAddressForImages)/venues/\(self.name).png"
         return URL.createEncodedURL(urlString: urlString)
     }
 }
@@ -43,7 +43,7 @@ struct PerformanceArtist: Codable, Identifiable, Hashable, Sendable {
     let genre: String
 
     var imageURL: URL? {
-        let urlString = "\(SONGLEAP_AMAZON_ADRESS_FOR_IMAGES)/artists/\(self.name).png"
+        let urlString = "\(Constants.songleapAmazonAddressForImages)/artists/\(self.name).png"
         return URL.createEncodedURL(urlString: urlString)
     }
 }

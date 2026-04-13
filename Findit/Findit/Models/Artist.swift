@@ -6,7 +6,7 @@ struct Artist: Codable, Identifiable, Hashable, Sendable {
     let genre: String
 
     var imageURL: URL? {
-        let urlString = "\(SONGLEAP_AMAZON_ADRESS_FOR_IMAGES)/artists/\(self.name).png"
+        let urlString = "\(Constants.songleapAmazonAddressForImages)/artists/\(self.name).png"
         return URL.createEncodedURL(urlString: urlString)
     }
 }
