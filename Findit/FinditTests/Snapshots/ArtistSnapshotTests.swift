@@ -147,4 +147,75 @@ final class ArtistSnapshotTests: XCTestCase {
         .environment(\.testImageOverride, sampleImage)
         assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
+
+    // MARK: - Filter
+
+    func testArtistDetailFilterNext30Days() {
+        let vm = ArtistDetailViewModel(
+            artist: MockData.artist1,
+            performances: MockData.artistPerformances
+        )
+        vm.filterSelection = .next30Days
+        let view = NavigationStack {
+            ArtistDetailView(viewModel: vm)
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testArtistDetailFilterNext60Days() {
+        let vm = ArtistDetailViewModel(
+            artist: MockData.artist1,
+            performances: MockData.artistPerformances
+        )
+        vm.filterSelection = .next60Days
+        let view = NavigationStack {
+            ArtistDetailView(viewModel: vm)
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testArtistDetailFilterCustomBothDates() {
+        let vm = ArtistDetailViewModel(
+            artist: MockData.artist1,
+            performances: MockData.artistPerformances
+        )
+        vm.filterSelection = .custom
+        vm.startDate = Calendar.current.date(from: DateComponents(year: 2026, month: 4, day: 20))
+        vm.endDate = Calendar.current.date(from: DateComponents(year: 2026, month: 5, day: 10))
+        let view = NavigationStack {
+            ArtistDetailView(viewModel: vm)
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testArtistDetailFilterCustomOnlyStartDate() {
+        let vm = ArtistDetailViewModel(
+            artist: MockData.artist1,
+            performances: MockData.artistPerformances
+        )
+        vm.filterSelection = .custom
+        vm.startDate = Calendar.current.date(from: DateComponents(year: 2026, month: 4, day: 20))
+        let view = NavigationStack {
+            ArtistDetailView(viewModel: vm)
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testArtistDetailFilterCustomOnlyEndDate() {
+        let vm = ArtistDetailViewModel(
+            artist: MockData.artist1,
+            performances: MockData.artistPerformances
+        )
+        vm.filterSelection = .custom
+        vm.endDate = Calendar.current.date(from: DateComponents(year: 2026, month: 5, day: 10))
+        let view = NavigationStack {
+            ArtistDetailView(viewModel: vm)
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
 }

@@ -146,4 +146,75 @@ final class VenueSnapshotTests: XCTestCase {
         .environment(\.testImageOverride, sampleImage)
         assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
     }
+
+    // MARK: - Filter
+
+    func testVenueDetailFilterNext30Days() {
+        let vm = VenueDetailViewModel(
+            venue: MockData.venue1,
+            performances: MockData.venuePerformances
+        )
+        vm.filterSelection = .next30Days
+        let view = NavigationStack {
+            VenueDetailView(viewModel: vm)
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testVenueDetailFilterNext60Days() {
+        let vm = VenueDetailViewModel(
+            venue: MockData.venue1,
+            performances: MockData.venuePerformances
+        )
+        vm.filterSelection = .next60Days
+        let view = NavigationStack {
+            VenueDetailView(viewModel: vm)
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testVenueDetailFilterCustomBothDates() {
+        let vm = VenueDetailViewModel(
+            venue: MockData.venue1,
+            performances: MockData.venuePerformances
+        )
+        vm.filterSelection = .custom
+        vm.startDate = Calendar.current.date(from: DateComponents(year: 2026, month: 4, day: 20))
+        vm.endDate = Calendar.current.date(from: DateComponents(year: 2026, month: 5, day: 10))
+        let view = NavigationStack {
+            VenueDetailView(viewModel: vm)
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testVenueDetailFilterCustomOnlyStartDate() {
+        let vm = VenueDetailViewModel(
+            venue: MockData.venue1,
+            performances: MockData.venuePerformances
+        )
+        vm.filterSelection = .custom
+        vm.startDate = Calendar.current.date(from: DateComponents(year: 2026, month: 4, day: 20))
+        let view = NavigationStack {
+            VenueDetailView(viewModel: vm)
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
+
+    func testVenueDetailFilterCustomOnlyEndDate() {
+        let vm = VenueDetailViewModel(
+            venue: MockData.venue1,
+            performances: MockData.venuePerformances
+        )
+        vm.filterSelection = .custom
+        vm.endDate = Calendar.current.date(from: DateComponents(year: 2026, month: 5, day: 10))
+        let view = NavigationStack {
+            VenueDetailView(viewModel: vm)
+        }
+        .environment(\.testImageOverride, sampleImage)
+        assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
+    }
 }
