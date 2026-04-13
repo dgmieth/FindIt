@@ -1,5 +1,5 @@
 //
-//  FinditTests.swift
+//  EndpointProtocolTests.swift
 //  FinditTests
 //
 //  Created by Diego Mieth on 2026-04-12.
