@@ -6,9 +6,9 @@
 //
 
 import XCTest
+@testable import Findit
 
 final class DateFormatterTests: XCTestCase {
-    
     private func getDate() -> Date? {
         var dateComponents = DateComponents()
         dateComponents.year = 2026

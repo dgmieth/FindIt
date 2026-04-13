@@ -25,22 +25,9 @@
 		38EFB36E2F8C80C400BA3087 /* FinditTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinditTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		38EFB3A02F8C85CF00BA3087 /* Exceptions for "Findit" folder in "FinditTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Extension/Date+extensions.swift",
-			);
-			target = 38EFB36D2F8C80C400BA3087 /* FinditTests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		38C2C1112F87F26F002733FA /* Findit */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				38EFB3A02F8C85CF00BA3087 /* Exceptions for "Findit" folder in "FinditTests" target */,
-			);
 			path = Findit;
 			sourceTree = "<group>";
 		};
