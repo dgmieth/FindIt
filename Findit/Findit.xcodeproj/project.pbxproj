@@ -10,14 +10,43 @@
 		38C2C1482F87F6AE002733FA /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 38C2C1472F87F6AE002733FA /* RswiftLibrary */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		38EFB3722F8C80C400BA3087 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38C2C1072F87F26F002733FA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 38C2C10E2F87F26F002733FA;
+			remoteInfo = Findit;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		38C2C10F2F87F26F002733FA /* Findit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Findit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		38EFB36E2F8C80C400BA3087 /* FinditTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinditTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		38EFB3A02F8C85CF00BA3087 /* Exceptions for "Findit" folder in "FinditTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extension/Date+extensions.swift",
+			);
+			target = 38EFB36D2F8C80C400BA3087 /* FinditTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		38C2C1112F87F26F002733FA /* Findit */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				38EFB3A02F8C85CF00BA3087 /* Exceptions for "Findit" folder in "FinditTests" target */,
+			);
 			path = Findit;
+			sourceTree = "<group>";
+		};
+		38EFB36F2F8C80C400BA3087 /* FinditTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FinditTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -31,6 +60,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		38EFB36B2F8C80C400BA3087 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -38,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				38C2C1112F87F26F002733FA /* Findit */,
+				38EFB36F2F8C80C400BA3087 /* FinditTests */,
 				38C2C1102F87F26F002733FA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				38C2C10F2F87F26F002733FA /* Findit.app */,
+				38EFB36E2F8C80C400BA3087 /* FinditTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -77,6 +115,29 @@
 			productReference = 38C2C10F2F87F26F002733FA /* Findit.app */;
 			productType = "com.apple.product-type.application";
 		};
+		38EFB36D2F8C80C400BA3087 /* FinditTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 38EFB3742F8C80C400BA3087 /* Build configuration list for PBXNativeTarget "FinditTests" */;
+			buildPhases = (
+				38EFB36A2F8C80C400BA3087 /* Sources */,
+				38EFB36B2F8C80C400BA3087 /* Frameworks */,
+				38EFB36C2F8C80C400BA3087 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				38EFB3732F8C80C400BA3087 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				38EFB36F2F8C80C400BA3087 /* FinditTests */,
+			);
+			name = FinditTests;
+			packageProductDependencies = (
+			);
+			productName = FinditTests;
+			productReference = 38EFB36E2F8C80C400BA3087 /* FinditTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -89,6 +150,10 @@
 				TargetAttributes = {
 					38C2C10E2F87F26F002733FA = {
 						CreatedOnToolsVersion = 26.3;
+					};
+					38EFB36D2F8C80C400BA3087 = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 38C2C10E2F87F26F002733FA;
 					};
 				};
 			};
@@ -110,12 +175,20 @@
 			projectRoot = "";
 			targets = (
 				38C2C10E2F87F26F002733FA /* Findit */,
+				38EFB36D2F8C80C400BA3087 /* FinditTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		38C2C10D2F87F26F002733FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		38EFB36C2F8C80C400BA3087 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -132,12 +205,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		38EFB36A2F8C80C400BA3087 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		38C2C14A2F87F6C5002733FA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 38C2C1492F87F6C5002733FA /* RswiftGenerateInternalResources */;
+		};
+		38EFB3732F8C80C400BA3087 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 38C2C10E2F87F26F002733FA /* Findit */;
+			targetProxy = 38EFB3722F8C80C400BA3087 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -273,6 +358,7 @@
 				DEVELOPMENT_TEAM = Q2UDAMQ287;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Find It";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -306,6 +392,7 @@
 				DEVELOPMENT_TEAM = Q2UDAMQ287;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Find It";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -329,6 +416,52 @@
 			};
 			name = Release;
 		};
+		38EFB3752F8C80C400BA3087 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q2UDAMQ287;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Find It";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.dgmieth.FinditTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Findit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Findit";
+			};
+			name = Debug;
+		};
+		38EFB3762F8C80C400BA3087 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q2UDAMQ287;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Find It";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.dgmieth.FinditTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Findit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Findit";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -346,6 +479,15 @@
 			buildConfigurations = (
 				38C2C11B2F87F272002733FA /* Debug */,
 				38C2C11C2F87F272002733FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		38EFB3742F8C80C400BA3087 /* Build configuration list for PBXNativeTarget "FinditTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38EFB3752F8C80C400BA3087 /* Debug */,
+				38EFB3762F8C80C400BA3087 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
