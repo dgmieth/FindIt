@@ -7,11 +7,18 @@
 
 import Foundation
 
+enum VenueDetailSortOrder {
+    case date
+    case artistName
+    case genre
+}
+
 @MainActor
 final class VenueDetailViewModel: ObservableObject {
     @Published var performances: [VenuePerformance] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var sortOrder: VenueDetailSortOrder = .date
     
     @Published var filterSelection: FilterOptions = .next14Days
     var startDate: Date?
@@ -90,8 +97,6 @@ final class VenueDetailViewModel: ObservableObject {
                 from: startDate,
                 to: endDate
             )
-            // AC -> The performances must obviously be shown in order of date and time
-            .sorted(by: { $0.parsedDate ?? .now < $1.parsedDate  ?? .now })
         } catch {
             self.errorMessage = error.localizedDescription
         }

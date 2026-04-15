@@ -6,11 +6,17 @@
 
 import SwiftUI
 
+enum ArtistSortOrder {
+    case name
+    case genre
+}
+
 @MainActor
 final class ArtistListViewModel: ObservableObject {
     @Published var artists: [Artist] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var sortOrder: ArtistSortOrder = .name
     
     init() { }
 
@@ -25,9 +31,7 @@ final class ArtistListViewModel: ObservableObject {
         self.errorMessage = nil
         
         do {
-            // AC -> Artists must be displayed in alphabetical order by name
             self.artists = try await Services.artistService.fetchArtists()
-                .sorted { $0.name < $1.name }
         } catch {
             self.errorMessage = error.localizedDescription
         }

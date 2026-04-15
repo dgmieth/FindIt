@@ -17,11 +17,13 @@ struct VenueListView: View {
     init() {}
     
     private var filteredVenues: [Venue] {
-        if searchText.isEmpty {
-            return viewModel.venues
-        }
-        return viewModel.venues.filter {
+        let base = searchText.isEmpty ? viewModel.venues : viewModel.venues.filter {
             $0.name.localizedCaseInsensitiveContains(searchText)
+        }
+        switch viewModel.sortOrder {
+        // AC ->  Venues will be displayed in order of their sortId
+        case .sortId: return base.sorted { $0.sortId < $1.sortId }
+        case .name:   return base.sorted { $0.name < $1.name }
         }
     }
 
@@ -50,6 +52,29 @@ struct VenueListView: View {
             prompt: Text(R.string.localizable.viewsVenuesListsSearchPlaceholder())
         )
         .navigationTitle(R.string.localizable.viewsVenuesListsNavBarTitle())
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button {
+                        viewModel.sortOrder = .sortId
+                    } label: {
+                        Label(R.string.localizable.viewsSortersDefault(), systemImage: viewModel.sortOrder == .sortId ? "checkmark" : "")
+                    }
+                    Button {
+                        viewModel.sortOrder = .name
+                    } label: {
+                        Label(R.string.localizable.viewsSortersVenue(), systemImage: viewModel.sortOrder == .name ? "checkmark" : "")
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.primary)
+                .frame(minWidth: Constants.minButtonWidth, minHeight: Constants.minButtonHeight)
+            }
+        }
         .task { await viewModel.loadVenues() }
     }
 }

@@ -45,3 +45,9 @@
 "Views.Filter.DatePicker.From" = "From";
 "Views.Filter.DatePicker.To" = "To";
 "Views.Filter.DatePicker.SelectDate" = "Select date";
+
+"Views.Sorters.Date" = "Date";
+"Views.Sorters.Venue" = "Venue name";
+"Views.Sorters.Artist" = "Artist name";
+"Views.Sorters.Genre" = "Genre";
+"Views.Sorters.Default" = "Default";

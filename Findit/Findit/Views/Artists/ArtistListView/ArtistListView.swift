@@ -18,12 +18,14 @@ struct ArtistListView: View {
     init() {}
     
     private var filteredArtists: [Artist] {
-        if searchText.isEmpty {
-            return viewModel.artists
-        }
-        return viewModel.artists.filter {
+        let base = searchText.isEmpty ? viewModel.artists : viewModel.artists.filter {
             $0.name.localizedCaseInsensitiveContains(searchText) ||
             $0.genre.localizedCaseInsensitiveContains(searchText)
+        }
+        switch viewModel.sortOrder {
+        // AC -> Artists must be displayed in alphabetical order by name
+        case .name:  return base.sorted { $0.name < $1.name }
+        case .genre: return base.sorted { $0.genre < $1.genre }
         }
     }
     
@@ -54,6 +56,29 @@ struct ArtistListView: View {
             prompt: Text(R.string.localizable.viewsArtistsListsSearchPlaceholder())
         )
         .navigationTitle(R.string.localizable.viewsArtistsListsNavBarTitle())
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button {
+                        viewModel.sortOrder = .name
+                    } label: {
+                        Label(R.string.localizable.viewsSortersArtist(), systemImage: viewModel.sortOrder == .name ? "checkmark" : "")
+                    }
+                    Button {
+                        viewModel.sortOrder = .genre
+                    } label: {
+                        Label(R.string.localizable.viewsSortersGenre(), systemImage: viewModel.sortOrder == .genre ? "checkmark" : "")
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.primary)
+                .frame(minWidth: Constants.minButtonWidth, minHeight: Constants.minButtonHeight)
+            }
+        }
         .task { await viewModel.loadArtists() }
     }
 }

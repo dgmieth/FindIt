@@ -23,11 +23,13 @@ struct ArtistDetailView: View {
     }
     
     private var filteredArtistPerformances: [ArtistPerformance] {
-        if searchText.isEmpty {
-            return viewModel.performances
-        }
-        return viewModel.performances.filter {
+        let base = searchText.isEmpty ? viewModel.performances : viewModel.performances.filter {
             $0.venue.name.localizedCaseInsensitiveContains(self.searchText)
+        }
+        switch viewModel.sortOrder {
+            // AC -> The performances must obviously be shown in order of date and time
+            case .date:      return base.sorted { $0.parsedDate ?? .now < $1.parsedDate ?? .now }
+            case .venueName: return base.sorted { $0.venue.name < $1.venue.name }
         }
     }
     
@@ -103,6 +105,28 @@ struct ArtistDetailView: View {
             prompt: Text(R.string.localizable.viewsArtistsDetailsSearchPlaceholder())
         )
         .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button {
+                        viewModel.sortOrder = .date
+                    } label: {
+                        Label(R.string.localizable.viewsSortersDate(), systemImage: viewModel.sortOrder == .date ? "checkmark" : "")
+                    }
+                    Button {
+                        viewModel.sortOrder = .venueName
+                    } label: {
+                        Label(R.string.localizable.viewsSortersVenue(), systemImage: viewModel.sortOrder == .venueName ? "checkmark" : "")
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.primary)
+                .frame(minWidth: Constants.minButtonWidth, minHeight: Constants.minButtonHeight)
+            }
+            
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     self.showFilters = true

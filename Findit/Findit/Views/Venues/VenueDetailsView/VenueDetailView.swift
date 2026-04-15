@@ -23,12 +23,15 @@ struct VenueDetailView: View {
     }
     
     private var filteredVenuePerformances: [VenuePerformance] {
-        if searchText.isEmpty {
-            return viewModel.performances
-        }
-        return viewModel.performances.filter {
+        let base = searchText.isEmpty ? viewModel.performances : viewModel.performances.filter {
             $0.artist.name.localizedCaseInsensitiveContains(searchText) ||
             $0.artist.genre.localizedStandardContains(searchText)
+        }
+        switch viewModel.sortOrder {
+        // AC -> The performances must obviously be shown in order of date and time
+        case .date:       return base.sorted { $0.parsedDate ?? .now < $1.parsedDate ?? .now }
+        case .artistName: return base.sorted { $0.artist.name < $1.artist.name }
+        case .genre:      return base.sorted { $0.artist.genre < $1.artist.genre }
         }
     }
     
@@ -99,6 +102,32 @@ struct VenueDetailView: View {
             prompt: Text(R.string.localizable.viewsVenuesDetailsSearchPlaceholder())
         )
         .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button {
+                        viewModel.sortOrder = .date
+                    } label: {
+                        Label(R.string.localizable.viewsSortersDate(), systemImage: viewModel.sortOrder == .date ? "checkmark" : "")
+                    }
+                    Button {
+                        viewModel.sortOrder = .artistName
+                    } label: {
+                        Label(R.string.localizable.viewsSortersArtist(), systemImage: viewModel.sortOrder == .artistName ? "checkmark" : "")
+                    }
+                    Button {
+                        viewModel.sortOrder = .genre
+                    } label: {
+                        Label(R.string.localizable.viewsSortersGenre(), systemImage: viewModel.sortOrder == .genre ? "checkmark" : "")
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.primary)
+                .frame(minWidth: Constants.minButtonWidth, minHeight: Constants.minButtonHeight)
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     self.showFilters = true
