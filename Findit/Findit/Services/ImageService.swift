@@ -12,39 +12,55 @@ protocol ImageServiceProtocol: Actor {
 }
 
 actor ImageService: ImageServiceProtocol {
-    private let cache = NSCache<NSURL, UIImage>()
-    
-    init() {
+    private let cache = NSCache<NSString, UIImage>()
+    private var tasks: [URL: Task<UIImage?, Never>] = [:]
+    private let urlSession: URLSession
+
+    init(urlSession: URLSession = .shared) {
+        self.urlSession = urlSession
         cache.countLimit = 150
+        cache.totalCostLimit = 50 * 1024 * 1024 // 50 MB
     }
 
     func fetchImage(for url: URL?) async -> UIImage? {
         guard let url else { return nil }
-        
-        if let image = self.get(for: url as NSURL) {
-            return image
+        let key = url.absoluteString as NSString
+
+        if let cached = cache.object(forKey: key) {
+            return cached
         }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            guard let image = UIImage(data: data) else {
+
+        if let existingTask = tasks[url] {
+            return await existingTask.value
+        }
+
+        let task = Task<UIImage?, Never> {
+            do {
+                let (data, _) = try await self.urlSession.data(from: url)
+                return UIImage(data: data)
+            } catch {
                 return nil
             }
-            
-            self.set(for: url as NSURL, image: image)
-            
-            return image
-        } catch {
-            return nil
         }
+
+        tasks[url] = task
+
+        let image = await task.value
+
+        self.tasks[url] = nil
+        
+        if let image {
+            self.set(image, for: key)
+        }
+        
+        return image
     }
     
-    private func get(for url: NSURL) -> UIImage? {
-        cache.object(forKey: url as NSURL)
-    }
-    
-    private func set(for url: NSURL, image: UIImage) {
-        cache.setObject(image, forKey: url as NSURL)
+
+    // MARK: - Cache
+
+    private func set(_ image: UIImage, for key: NSString) {
+        let cost = Int(image.size.width * image.size.height * 4)
+        cache.setObject(image, forKey: key, cost: cost)
     }
 }
