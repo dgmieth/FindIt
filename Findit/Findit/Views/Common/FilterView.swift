@@ -42,7 +42,7 @@ private struct DatePickerSheet: View {
                 displayedComponents: [.date]
             )
             .datePickerStyle(.graphical)
-            .padding(.horizontal)
+            .padding(.horizontal, Constants.horizontalPadding)
             .onChange(of: selection) { _, _ in dismiss() }
         }
     }
@@ -144,10 +144,18 @@ struct FilterView: View {
                             showStartPicker = true
                         }
                         .font(.callout.weight(.semibold))
-                        .foregroundStyle(startDate == nil ? Color.secondary : Color.accentColor)
-                        .padding(.horizontal, 10)
-                        .frame(minWidth: 44, minHeight: 44)
-                        .background(Color(.systemFill), in: RoundedRectangle(cornerRadius: 8))
+                        .foregroundStyle(startDate == nil ? Color.primary : Color.accentColor)
+                        .padding(.horizontal, Constants.horizontalPadding)
+                        .frame(minWidth: Constants.minButtonWidth, minHeight: Constants.minButtonHeight)
+                        .background(
+                            startDate == nil ? Color.clear : Color(.systemFill),
+                            in: RoundedRectangle(cornerRadius: Constants.standardCornerRadius)
+                        )
+                        .overlay(
+                            startDate == nil
+                                ? RoundedRectangle(cornerRadius: Constants.standardCornerRadius).stroke(Color.primary, lineWidth: 0.5)
+                                : nil
+                        )
                     }
                     
                     HStack {
@@ -164,10 +172,18 @@ struct FilterView: View {
                             showEndPicker = true
                         }
                         .font(.callout.weight(.semibold))
-                        .foregroundStyle(endDate == nil ? Color.secondary : Color.accentColor)
-                        .padding(.horizontal, 10)
-                        .frame(minWidth: 44, minHeight: 44)
-                        .background(Color(.systemFill), in: RoundedRectangle(cornerRadius: 8))
+                        .foregroundStyle(endDate == nil ? Color.primary : Color.accentColor)
+                        .padding(.horizontal, Constants.horizontalPadding)
+                        .frame(minWidth: Constants.minButtonWidth, minHeight: Constants.minButtonHeight)
+                        .background(
+                            endDate == nil ? Color.clear : Color(.systemFill),
+                            in: RoundedRectangle(cornerRadius: Constants.standardCornerRadius)
+                        )
+                        .overlay(
+                            endDate == nil
+                                ? RoundedRectangle(cornerRadius: Constants.standardCornerRadius).stroke(Color.primary, lineWidth: 0.5)
+                                : nil
+                        )
                     }
                     
                     switch (self.startDate, self.endDate) {
@@ -208,13 +224,13 @@ struct FilterView: View {
                     Text(R.string.localizable.viewsFilterButtonReset())
                         .font(.body)
                         .fontWeight(.semibold)
-                        .padding(.horizontal, 12)
+                        .padding(.horizontal, Constants.horizontalPadding)
                         .padding(.vertical, 8)
                 }
                 .buttonStyle(.plain)
-                .frame(maxWidth: .infinity, minHeight: 44)
+                .frame(maxWidth: .infinity, minHeight: Constants.minButtonHeight)
                 .background(
-                    RoundedRectangle(cornerRadius: 8.0).stroke(.secondary, lineWidth: 1.0)
+                    RoundedRectangle(cornerRadius: Constants.standardCornerRadius).stroke(.secondary, lineWidth: 1.0)
                 )
                 
                 Button {
@@ -223,13 +239,13 @@ struct FilterView: View {
                     Text(R.string.localizable.viewsFilterPickerShowResults())
                         .font(.body)
                         .fontWeight(.semibold)
-                        .padding(.horizontal, 12)
+                        .padding(.horizontal, Constants.horizontalPadding)
                         .padding(.vertical, 8)
                 }
                 .buttonStyle(.plain)
-                .frame(maxWidth: .infinity, minHeight: 44)
+                .frame(maxWidth: .infinity, minHeight: Constants.minButtonHeight)
                 .background(
-                    RoundedRectangle(cornerRadius: 8.0).fill(self.showResultsDisabled ? .gray : .blue)
+                    RoundedRectangle(cornerRadius: Constants.standardCornerRadius).fill(self.showResultsDisabled ? .gray : .blue)
                 )
                 .disabled(self.showResultsDisabled)
             }
@@ -238,7 +254,7 @@ struct FilterView: View {
             self.startDate = nil
             self.endDate = nil
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, Constants.horizontalPadding)
         .sheet(isPresented: $showStartPicker) {
             DatePickerSheet(
                 selection: startDateBinding,

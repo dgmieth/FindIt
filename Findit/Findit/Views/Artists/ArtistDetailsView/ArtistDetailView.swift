@@ -4,6 +4,9 @@ struct ArtistDetailView: View {
     @StateObject private var viewModel: ArtistDetailViewModel
     @State private var showFilters: Bool = false
     @State private var searchText: String = ""
+    @State private var selectedPerformance: ArtistPerformance?
+    @State private var pendingArtistNavigation: Artist?
+    @State private var artistToNavigate: Artist?
     
     init(artist: Artist) {
         self._viewModel = .init(wrappedValue: .init(artist: artist))
@@ -65,7 +68,7 @@ struct ArtistDetailView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, Constants.horizontalPadding)
                     .padding(.top, 16)
                     .padding(.bottom, 8)
                     
@@ -84,7 +87,9 @@ struct ArtistDetailView: View {
                         .padding()
                     } else {
                         ForEach(self.filteredArtistPerformances) { performance in
-                            ArtistPerformanceRow(performance: performance)
+                            ArtistPerformanceRow(performance: performance) {
+                                self.selectedPerformance = performance
+                            }
                             Divider().padding(.leading, 82)
                         }
                     }
@@ -109,11 +114,27 @@ struct ArtistDetailView: View {
                 .buttonStyle(.plain)
                 .foregroundStyle(.primary)
                 .contentShape(Rectangle())
-                .frame(minWidth: 44, minHeight: 44)
+                .frame(minWidth: Constants.minButtonWidth, minHeight: Constants.minButtonHeight)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.loadPerformances() }
+        .navigationDestination(item: self.$artistToNavigate) { artist in
+            ArtistDetailView(artist: artist)
+        }
+        .sheet(item: self.$selectedPerformance, onDismiss: {
+            if let artist = self.pendingArtistNavigation {
+                self.artistToNavigate = artist
+                self.pendingArtistNavigation = nil
+            }
+        }) { performance in
+            CoArtistsSheetView(performance: performance) { artist in
+                self.pendingArtistNavigation = artist
+                self.selectedPerformance = nil
+            }
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
+        }
         .sheet(isPresented: self.$showFilters) {
             FilterView(
                 filterOption: self.viewModel.filterSelection,
@@ -131,7 +152,8 @@ struct ArtistDetailView: View {
 
 private struct ArtistPerformanceRow: View {
     let performance: ArtistPerformance
-    
+    let onShowCoArtists: () -> Void
+
     var body: some View {
         HStack(spacing: 14) {
             ImageView(url: performance.venue.imageURL, size: 56)
@@ -154,8 +176,17 @@ private struct ArtistPerformanceRow: View {
             }
             
             Spacer()
+
+            Button(action: self.onShowCoArtists) {
+                Image(systemName: "person.2")
+                    .font(.system(size: 16))
+                    .foregroundStyle(.secondary)
+                    .frame(minWidth: Constants.minButtonWidth, minHeight: Constants.minButtonHeight)
+            }
+            .buttonStyle(.plain)
+            .contentShape(Rectangle())
         }
-        .padding(.horizontal)
+        .padding(.horizontal, Constants.horizontalPadding)
         .padding(.vertical, 10)
     }
 }

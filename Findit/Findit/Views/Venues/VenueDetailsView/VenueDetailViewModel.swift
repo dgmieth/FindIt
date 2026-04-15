@@ -90,6 +90,8 @@ final class VenueDetailViewModel: ObservableObject {
                 from: startDate,
                 to: endDate
             )
+            // AC -> The performances must obviously be shown in order of date and time
+            .sorted(by: { $0.parsedDate ?? .now < $1.parsedDate  ?? .now })
         } catch {
             self.errorMessage = error.localizedDescription
         }

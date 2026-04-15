@@ -17,6 +17,10 @@
 "Views.Artists.Details.Performances.Error.NoData" = "No upcoming performances";
 "Views.Artists.Details.Search.Placeholder" = "Venues";
 
+"Views.CoArtists.State.Empty" = "No other artists";
+"Views.CoArtists.State.Empty.Explanation" = "No other artists are scheduled at this venue on this date.";
+"Views.CoArtists.Subtitle" = "other performances";
+
 "Views.Venues.Lists.State.Loading"= "Loading venues…";
 "Views.Venues.Lists.State.Error"= "Couldn't load venues";
 "Views.Venues.Lists.Search.Placeholder" = "Venue name";
@@ -24,6 +28,9 @@
 
 "Views.Venues.Details.Performances.Error.NoData" = "No upcoming performances";
 "Views.Venues.Details.Search.Placeholder" = "Artists or genre";
+"Views.CoVenues.State.Empty" = "No other venues";
+"Views.CoVenues.State.Empty.Explanation" = "This artist has no other scheduled performances around this date.";
+"Views.CoVenues.Subtitle" = "other venues (%@ - %@)";
 
 "Views.Filter.Option.Next14Days" = "Next 14 Days";
 "Views.Filter.Option.Next30Days" = "Next 30 Days";

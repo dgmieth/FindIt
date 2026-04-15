@@ -4,6 +4,9 @@ struct VenueDetailView: View {
     @StateObject private var viewModel: VenueDetailViewModel
     @State private var showFilters: Bool = false
     @State private var searchText: String = ""
+    @State private var selectedPerformance: VenuePerformance?
+    @State private var pendingVenueNavigation: Venue?
+    @State private var venueToNavigate: Venue?
     
     init(venue: Venue) {
         self._viewModel = .init(wrappedValue: .init(venue: venue))
@@ -61,7 +64,7 @@ struct VenueDetailView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, Constants.horizontalPadding)
                     .padding(.top, 16)
                     .padding(.bottom, 8)
 
@@ -80,7 +83,9 @@ struct VenueDetailView: View {
                         .padding()
                     } else {
                         ForEach(self.filteredVenuePerformances) { performance in
-                            VenuePerformanceRow(performance: performance)
+                            VenuePerformanceRow(performance: performance) {
+                                self.selectedPerformance = performance
+                            }
                             Divider().padding(.leading, 82)
                         }
                     }
@@ -105,11 +110,27 @@ struct VenueDetailView: View {
                 .buttonStyle(.plain)
                 .foregroundStyle(.primary)
                 .contentShape(Rectangle())
-                .frame(minWidth: 44, minHeight: 44)
+                .frame(minWidth: Constants.minButtonWidth, minHeight: Constants.minButtonHeight)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.loadPerformances() }
+        .navigationDestination(item: self.$venueToNavigate) { venue in
+            VenueDetailView(venue: venue)
+        }
+        .sheet(item: self.$selectedPerformance, onDismiss: {
+            if let venue = self.pendingVenueNavigation {
+                self.venueToNavigate = venue
+                self.pendingVenueNavigation = nil
+            }
+        }) { performance in
+            CoVenuesSheetView(performance: performance, venueName: self.viewModel.venue.name) { venue in
+                self.pendingVenueNavigation = venue
+                self.selectedPerformance = nil
+            }
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
+        }
         .sheet(isPresented: self.$showFilters) {
             FilterView(
                 filterOption: self.viewModel.filterSelection,
@@ -127,6 +148,7 @@ struct VenueDetailView: View {
 
 private struct VenuePerformanceRow: View {
     let performance: VenuePerformance
+    let onShowCoVenues: () -> Void
 
     var body: some View {
         HStack(spacing: 14) {
@@ -153,8 +175,17 @@ private struct VenuePerformanceRow: View {
             }
 
             Spacer()
+
+            Button(action: self.onShowCoVenues) {
+                Image(systemName: "mappin.and.ellipse")
+                    .font(.system(size: 16))
+                    .foregroundStyle(.secondary)
+                    .frame(minWidth: Constants.minButtonWidth, minHeight: Constants.minButtonHeight)
+            }
+            .buttonStyle(.plain)
+            .contentShape(Rectangle())
         }
-        .padding(.horizontal)
+        .padding(.horizontal, Constants.horizontalPadding)
         .padding(.vertical, 10)
     }
 }
