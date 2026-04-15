@@ -18,7 +18,8 @@ final class CoVenuesSnapshotTests: XCTestCase {
     func testCoVenuesLoaded() {
         let vm = CoVenuesSheetViewModel(
             artist: MockData.performanceArtist,
-            performances: MockData.artistPerformances
+            performances: MockData.artistPerformances,
+            date: Date.getDate()!
         )
         let view = CoVenuesSheetView(viewModel: vm)
             .environment(\.testImageOverride, sampleImage)
@@ -29,7 +30,8 @@ final class CoVenuesSnapshotTests: XCTestCase {
         let vm = CoVenuesSheetViewModel(
             artist: MockData.performanceArtist,
             performances: [],
-            isLoading: true
+            isLoading: true,
+            date: Date.getDate()!
         )
         let view = CoVenuesSheetView(viewModel: vm)
         assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
@@ -39,7 +41,8 @@ final class CoVenuesSnapshotTests: XCTestCase {
         let vm = CoVenuesSheetViewModel(
             artist: MockData.performanceArtist,
             performances: [],
-            errorMessage: "Failed to load venues."
+            errorMessage: "Failed to load venues.",
+            date: Date.getDate()!
         )
         let view = CoVenuesSheetView(viewModel: vm)
         assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)
@@ -48,7 +51,8 @@ final class CoVenuesSnapshotTests: XCTestCase {
     func testCoVenuesEmpty() {
         let vm = CoVenuesSheetViewModel(
             artist: MockData.performanceArtist,
-            performances: []
+            performances: [],
+            date: Date.getDate()!
         )
         let view = CoVenuesSheetView(viewModel: vm)
         assertSnapshot(of: UIHostingController(rootView: view), as: .lightIPhone13Pro, record: RecordMode.recording)

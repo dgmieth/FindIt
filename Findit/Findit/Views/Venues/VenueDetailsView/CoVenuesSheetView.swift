@@ -26,14 +26,14 @@ final class CoVenuesSheetViewModel: ObservableObject {
     }
 
     // MARK: - Testing Support
-    init(artist: PerformanceArtist, venueName: String = "Madison Square Garden", performances: [ArtistPerformance], isLoading: Bool = false, errorMessage: String? = nil) {
+    init(artist: PerformanceArtist, venueName: String = "Madison Square Garden", performances: [ArtistPerformance], isLoading: Bool = false, errorMessage: String? = nil, date: Date) {
         self.artist = artist
         self.venueName = venueName
         self.performances = performances
         self.isLoading = isLoading
         self.errorMessage = errorMessage
-        self.from = Date()
-        self.to = Date()
+        self.from = date
+        self.to = date
         self.excludingVenueId = -1
     }
 
